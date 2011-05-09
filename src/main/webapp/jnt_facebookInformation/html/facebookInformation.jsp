@@ -25,9 +25,12 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 
-<div style="width: 850px; border: medium dotted; padding: 10px;">
+<div style="width: 250px; border: medium dotted; padding: 10px;">
 
-    Friends Number : ${fbUtil:getFriendsNumber(renderContext.user)}
+    <img src="https://graph.facebook.com/${renderContext.user.username}/picture" style="float:left;margin-right:10px;"/>
+    ${renderContext.user.properties["j:firstName"]}&nbsp;${renderContext.user.properties["j:lastName"]}<br/>
+    Friends Number : ${fbUtil:getFriendsNumber(renderContext.user)} <br/>
+    Email : ${renderContext.user.properties["j:email"]}
 
     <%--
     <c:choose>

@@ -5,6 +5,7 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.types.User;
 import org.jahia.services.SpringContextSingleton;
+import org.jahia.services.usermanager.JahiaFacebookUser;
 import org.jahia.services.usermanager.JahiaUser;
 import org.jahia.services.usermanager.JahiaUserManagerFacebookProvider;
 
@@ -50,11 +51,11 @@ public class FacebookUtil {
 
     public static int getFriendsNumber(JahiaUser jahiaUser)
     {
-        if(jahiaUser != null)
+        if(jahiaUser != null && jahiaUser instanceof JahiaFacebookUser)
         {
             String access_token = jahiaUser.getProperty("access_token");
 
-            if(!access_token.isEmpty())
+            if(access_token != null)
             {
                  //Get the Facebook Client
                  FacebookClient facebookClient  = new DefaultFacebookClient(access_token);
