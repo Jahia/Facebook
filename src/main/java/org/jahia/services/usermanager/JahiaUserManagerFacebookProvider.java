@@ -175,7 +175,7 @@ public class JahiaUserManagerFacebookProvider extends JahiaUserManagerProvider {
         //@todo : map others facebook properties to "new" jahia properties
 
         //Create the jahia facebook user with the proper properties
-        jfu = new JahiaFacebookUser(facebookUser.getId(),userProps);
+        jfu = new JahiaFacebookUser(JahiaUserManagerFacebookProvider.PROVIDER_NAME,facebookUser.getId(),facebookUser.getId(),userProps);
 
         //Update cache
         if (jfu != null) {
@@ -248,16 +248,20 @@ public class JahiaUserManagerFacebookProvider extends JahiaUserManagerProvider {
                 //Get the access token
                 String access_token = jcrUser.getProperty("access_token");
 
-                //Get the Facebook Client based on the access token
-                FacebookClient facebookClient  = new DefaultFacebookClient(access_token);
+                if(access_token != null)
+                {
+                    //Get the Facebook Client based on the access token
+                    FacebookClient facebookClient  = new DefaultFacebookClient(access_token);
 
-                //Get the corresponding facebook user
-                User user = facebookClient.fetchObject("me", User.class);
+                    //Get the corresponding facebook user
+                    User user = facebookClient.fetchObject("me", User.class);
 
-                //Create a Jahia Facebook User based on the "business" Facebook User
-                JahiaFacebookUser jfu =  facebookToJahiaUser(user,access_token);
+                    //Create a Jahia Facebook User based on the "business" Facebook User
+                    JahiaFacebookUser jfu =  facebookToJahiaUser(user,access_token);
 
-                return jfu;
+                    return jfu;
+                }
+                 else return null;
             }
             else return null;
         }
