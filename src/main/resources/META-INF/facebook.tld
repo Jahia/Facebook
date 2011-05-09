@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+        version="2.0">
+
+    <description>Jahia Facebook Util</description>
+    <display-name>Jahia Facebook Util</display-name>
+    <tlib-version>1.0</tlib-version>
+    <short-name>jahiaa-facebook-util</short-name>
+    <uri>http://www.jahia.org/tags/facebook</uri>
+    <function>
+        <description>Get the permission list for the facebook connect component</description>
+        <name>getPermissionList</name>
+        <function-class>org.jahia.modules.facebook.FacebookUtil</function-class>
+        <function-signature>java.lang.String getPermissionList()</function-signature>
+    </function>
+    <function>
+        <description>Get the friends number of the specified jahia facebook user</description>
+        <name>getFriendsNumber</name>
+        <function-class>org.jahia.modules.facebook.FacebookUtil</function-class>
+        <function-signature>int getFriendsNumber(org.jahia.services.usermanager.JahiaUser)</function-signature>
+    </function>
+</taglib>

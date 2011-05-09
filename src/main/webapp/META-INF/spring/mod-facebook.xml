@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+    <bean id="JahiaUserManagerFacebookProvider" class="org.jahia.services.usermanager.JahiaUserManagerFacebookProvider" parent="JahiaUserManagerProvider">
+        <property name="key" value="facebook"/>
+        <property name="priority" value="3"/>
+        <property name="cacheService" ref="JahiaCacheService"/>
+        <property name="defaultProvider" value="false"/>
+        <property name="readOnly" value="true"/>
+        <property name="jcrUserManagerProvider" ref="JCRUserManagerProvider"/>
+        <property name="facebookProperties">
+            <map>
+                <!--Mandatory mapping [No specific permission]-->
+                <entry key="access_token.attribute.map" value="true"/>
+                <entry key="j:facebookID.attribute.map" value="true"/>
+                <entry key="j:firstName.attribute.map" value="true"/>
+                <entry key="j:lastName.attribute.map" value="true"/>
+                <entry key="j:gender.attribute.map" value="true"/>
+                <entry key="preferredLanguage.attribute.map" value="false"/>
+
+                <!--Mandatory permission-->
+                <entry key="offline_access.permission" value="true"/>
+
+                <!--Optional mapping & permissions -->
+                <entry key="email.permission" value="true"/>
+                <entry key="j:email.attribute.map" value="true"/>
+
+                <entry key="user_about_me.permission" value="true"/>
+                <entry key="j:about.attribute.map" value="true"/>
+
+                <%--Please do not use, there is a bug--%>
+                <entry key="user_birthday.permission" value="false"/>
+                <entry key="j:birthDate.attribute.map" value="false"/>
+
+                <!--@todo: add mapping for all facebook properties-->
+
+                <!--Optional permissions for the user-->
+                <entry key="user_activities.permission" value="false"/>
+                <entry key="user_education_history.permission" value="false"/>
+                <entry key="user_events.permission" value="false"/>
+                <entry key="user_groups.permission" value="true"/>
+                <entry key="user_hometown.permission" value="false"/>
+                <entry key="user_interests.permission" value="true"/>
+                <entry key="user_likes.permission" value="true"/>
+                <entry key="user_location.permission" value="true"/>
+                <entry key="user_notes.permission" value="false"/>
+                <entry key="user_online_presence.permission" value="false"/>
+                <entry key="user_photo_video_tags.permission" value="true"/>
+                <entry key="user_photos.permission" value="true"/>
+                <entry key="user_relationships.permission" value="true"/>
+                <entry key="user_relationship_details.permission" value="false"/>
+                <entry key="user_religion_politics.permission" value="false"/>
+                <entry key="user_status.permission" value="true"/>
+                <entry key="user_videos.permission" value="true"/>
+                <entry key="user_website.permission" value="true"/>
+                <entry key="user_work_history.permission" value="true"/>
+                <entry key="read_friendlists.permission" value="true"/>
+                <entry key="read_insights.permission" value="false"/>
+                <entry key="read_mailbox.permission" value="false"/>
+                <entry key="read_requests.permission" value="false"/>
+                <entry key="read_stream.permission" value="true"/>
+                <entry key="xmpp_login.permission" value="false"/>
+                <entry key="ads_management.permission" value="false"/>
+                <entry key="user_checkins.permission" value="false"/>
+
+                <!--@todo: add all others permissions (group + actions)-->
+            </map>
+        </property>
+    </bean>
+
+</beans>
