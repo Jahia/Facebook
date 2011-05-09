@@ -29,7 +29,7 @@
                 <entry key="user_about_me.permission" value="true"/>
                 <entry key="j:about.attribute.map" value="true"/>
 
-                <%--Please do not use, there is a bug--%>
+                <!--Please do not use, there is a bug-->
                 <entry key="user_birthday.permission" value="false"/>
                 <entry key="j:birthDate.attribute.map" value="false"/>
 
