@@ -28,12 +28,42 @@
 
                 <entry key="user_about_me.permission" value="true"/>
                 <entry key="j:about.attribute.map" value="true"/>
+                <entry key="bio.attribute.map" value="true"/>
+                <entry key="quotes.attribute.map" value="true"/>
 
                 <!--Please do not use, there is a bug-->
                 <entry key="user_birthday.permission" value="false"/>
                 <entry key="j:birthDate.attribute.map" value="false"/>
 
-                <!--@todo: add mapping for all facebook properties-->
+                <!--@todo: add mapping for all facebook properties in the Java class-->
+                <entry key="name.attribute.map" value="true"/>
+
+                <entry key="user_education_history.permission" value="false"/>
+                <entry key="education.attribute.map" value="false"/>
+
+                <entry key="user_hometown.permission" value="false"/>
+                <entry key="hometown.attribute.map" value="false"/>
+
+                <entry key="user_relationship_details.permission" value="false"/>
+                <entry key="interested_in.attribute.map" value="false"/>
+                <entry key="significant_other.attribute.map" value="false"/>
+
+                <entry key="user_location" value="false"/>
+                <entry key="location.attribute.map" value="false"/>
+
+                <entry key="user_religion_politics.permission" value="false"/>
+                <entry key="political.attribute.map" value="false"/>
+                <entry key="religion.attribute.map" value="false"/>
+
+                <entry key="user_relationships.permission" value="false"/>
+                <entry key="relationship_status.attribute.map" value="false"/>
+
+                <entry key="user_website.permission" value="false"/>
+                <entry key="website.attribute.map" value="false"/>
+
+                <entry key="user_work_history.permission" value="false"/>
+                <entry key="work.attribute.map" value="false"/>
+
 
                 <!--Optional permissions for the user-->
                 <entry key="user_activities.permission" value="false"/>
@@ -63,6 +93,14 @@
                 <entry key="xmpp_login.permission" value="false"/>
                 <entry key="ads_management.permission" value="false"/>
                 <entry key="user_checkins.permission" value="false"/>
+                <entry key="publish_stream.permission" value="false"/>
+                <entry key="create_event.permission" value="false"/>
+                <entry key="rsvp_event.permission" value="false"/>
+                <entry key="sms.permission" value="false"/>
+                <entry key="offline_access.permission" value="false"/>
+                <entry key="publish_checkins.permission" value="false"/>
+                <entry key="manage_pages.permission" value="false"/>
+
 
                 <!--@todo: add all others permissions (group + actions)-->
             </map>
