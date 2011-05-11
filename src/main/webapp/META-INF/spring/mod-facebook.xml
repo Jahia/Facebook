@@ -100,7 +100,8 @@
                 <entry key="offline_access.permission" value="false"/>
                 <entry key="publish_checkins.permission" value="false"/>
                 <entry key="manage_pages.permission" value="false"/>
-
+				
+				
                 <!--@todo: add all others permissions (group + actions)-->
             </map>
         </property>
