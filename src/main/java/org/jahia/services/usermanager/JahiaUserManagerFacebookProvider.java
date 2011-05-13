@@ -171,6 +171,17 @@ public class JahiaUserManagerFacebookProvider extends JahiaUserManagerProvider {
         if(mappedProperties.containsKey("j:about") && facebookUser.getAbout()!=null) userProps.setUserProperty("j:about",new UserProperty("j:about",facebookUser.getAbout(),true));
         if(mappedProperties.containsKey("j:birthDate") && facebookUser.getBirthday()!=null) userProps.setUserProperty("j:birthDate",new UserProperty("j:birthDate",facebookUser.getBirthday(),true));
 
+        if(mappedProperties.containsKey("name") && facebookUser.getBirthday()!=null) userProps.setUserProperty("name",new UserProperty("name",facebookUser.getName(),true));
+        if(mappedProperties.containsKey("education") && facebookUser.getBirthday()!=null) userProps.setUserProperty("education",new UserProperty("education",facebookUser.getEducation().toString(),true));
+        if(mappedProperties.containsKey("hometown") && facebookUser.getBirthday()!=null) userProps.setUserProperty("hometown",new UserProperty("hometown",facebookUser.getHometownName(),true));
+        if(mappedProperties.containsKey("interested_in") && facebookUser.getBirthday()!=null) userProps.setUserProperty("interested_in",new UserProperty("interested_in",facebookUser.getInterestedIn().toString(),true));
+        if(mappedProperties.containsKey("significant_other") && facebookUser.getBirthday()!=null) userProps.setUserProperty("significant_other",new UserProperty("significant_other",facebookUser.getSignificantOther().toString(),true));
+        if(mappedProperties.containsKey("political") && facebookUser.getBirthday()!=null) userProps.setUserProperty("political",new UserProperty("political",facebookUser.getPolitical(),true));
+        if(mappedProperties.containsKey("religion") && facebookUser.getBirthday()!=null) userProps.setUserProperty("religion",new UserProperty("religion",facebookUser.getReligion(),true));
+        if(mappedProperties.containsKey("relationship_status") && facebookUser.getBirthday()!=null) userProps.setUserProperty("relationship_status",new UserProperty("relationship_status",facebookUser.getRelationshipStatus(),true));
+        if(mappedProperties.containsKey("website") && facebookUser.getBirthday()!=null) userProps.setUserProperty("website",new UserProperty("website",facebookUser.getWebsite(),true));
+        if(mappedProperties.containsKey("work") && facebookUser.getBirthday()!=null) userProps.setUserProperty("work",new UserProperty("work",facebookUser.getWork().toString(),true));
+
 
         //@todo : map others facebook properties to "new" jahia properties
 

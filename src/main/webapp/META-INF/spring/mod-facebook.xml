@@ -11,6 +11,13 @@
         <property name="jcrUserManagerProvider" ref="JCRUserManagerProvider"/>
         <property name="facebookProperties">
             <map>
+                <!--How it works ?-->
+                <!-- Choose the attributes to map in Jahia-->
+                <!-- If the attribute requires a permission, set also the associated permission to true-->
+                <!-- When an attribute is defined as mapped, it will be available in Jahia on the user node ${renderContext.user.properties.attribute} -->
+                <!-- The first part is mandatory attributes, directly mapped to Jahia attributes-->
+                <!-- The second part is optional attributes, than you can exploit in your own modules, but which are not use by default in Jahia-->
+
                 <!--Mandatory mapping [No specific permission]-->
                 <entry key="access_token.attribute.map" value="true"/>
                 <entry key="j:facebookID.attribute.map" value="true"/>
@@ -35,7 +42,7 @@
                 <entry key="user_birthday.permission" value="false"/>
                 <entry key="j:birthDate.attribute.map" value="false"/>
 
-                <!--@todo: add mapping for all facebook properties in the Java class-->
+                 <!--Optional mapping-->
                 <entry key="name.attribute.map" value="true"/>
 
                 <entry key="user_education_history.permission" value="false"/>
