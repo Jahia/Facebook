@@ -4,3 +4,5 @@
 [jnt:facebookConnect] > jnt:content, jmix:socialComponent
 
 [jnt:facebookInformation] > jnt:content, jmix:socialComponent
+
+[jnt:facebookLike] > jnt:content, jmix:socialComponent
