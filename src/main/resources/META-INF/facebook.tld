@@ -22,4 +22,10 @@
         <function-class>org.jahia.modules.facebook.FacebookUtil</function-class>
         <function-signature>int getFriendsNumber(org.jahia.services.usermanager.JahiaUser)</function-signature>
     </function>
+    <function>
+        <description>Get the Facebook App ID</description>
+        <name>getFacebookAppID</name>
+        <function-class>org.jahia.modules.facebook.FacebookUtil</function-class>
+        <function-signature>java.lang.String getFacebookAppID()</function-signature>
+    </function>
 </taglib>

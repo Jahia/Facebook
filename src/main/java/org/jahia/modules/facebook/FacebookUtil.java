@@ -76,7 +76,6 @@ public class FacebookUtil {
 
     public static String getFacebookAppID()
     {
-          //@todo: implement it
-          return null;
+          return "149708825083446";
     }
 }
