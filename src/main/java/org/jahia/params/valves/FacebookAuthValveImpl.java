@@ -7,7 +7,6 @@ import org.jahia.registries.ServicesRegistry;
 import org.jahia.services.usermanager.JahiaUser;
 import org.jahia.services.usermanager.JahiaUserManagerFacebookProvider;
 import org.jahia.services.usermanager.JahiaUserManagerProvider;
-import org.jahia.utils.i18n.JahiaResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +17,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,8 +30,8 @@ public class FacebookAuthValveImpl extends BaseAuthValve {
     //Log4j
     private static final transient Logger logger = LoggerFactory.getLogger(FacebookAuthValveImpl.class);
 
-    private static String app_id = JahiaResourceBundle.getString("Facebook", "app_id",new Locale("secret"), "Facebook");
-    private static String app_secret = JahiaResourceBundle.getString("Facebook", "app_secret",new Locale("secret"), "Facebook");
+    private static String app_id = "149708825083446";//JahiaResourceBundle.getString("Facebook", "app_id",new Locale("secret"), "Facebook");
+    private static String app_secret = "9e834945988546f279e9fd19f94508f5";//JahiaResourceBundle.getString("Facebook", "app_secret",new Locale("secret"), "Facebook");
 
     //Invoke method
     public void invoke(Object context, ValveContext valveContext) throws PipelineException
