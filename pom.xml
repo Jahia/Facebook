@@ -48,6 +48,12 @@
     <name>Facebook</name>  
     <packaging>war</packaging>
     <description>This is the custom module (Facebook) for running on a Jahia server.</description>
+    <scm>
+        <connection>scm:git:git@github.com:Jahia/Facebook.git</connection>
+        <url>scm:git:git@github.com:Jahia/Facebook.git</url>
+        <developerConnection>scm:git:git@github.com:Jahia/Facebook.git</developerConnection>
+    </scm>
+
 	<repositories>
         <repository>
             <id>jahiaRepository</id>
