@@ -6,7 +6,7 @@
 [jnt:facebookInformation] > jnt:content, jmix:socialComponent
 
 [jnt:facebookLike] > jnt:content, jmix:socialComponent
-- displaySendButton (boolean) = false
+//- displaySendButton (boolean) = false
 - layout (string, choicelist) = "standard" <  "standard", "button_count", "box_count"
 - width (long) = 450
 - show_faces (boolean) = true
