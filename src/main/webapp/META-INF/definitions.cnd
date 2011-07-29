@@ -7,9 +7,9 @@
 
 [jnt:facebookLike] > jnt:content, jmix:socialComponent
 //- displaySendButton (boolean) = false
-- layout (string, choicelist) = "standard" <  "standard", "button_count", "box_count"
+- layout (string, choicelist) = "standard" indexed=no <  "standard", "button_count", "box_count"
 - width (long) = 450
 - show_faces (boolean) = true
-- action (string, choicelist) = "like" < "like", "recommend"
-- colorscheme (string, choicelist) = "light" < "light", "dark"
-- font (string, choicelist) = "arial" < "arial", "lucida grande", "segoe ui", "tahoma", "trebuchet ms", "verdana"
+- action (string, choicelist) = "like" indexed=no < "like", "recommend"
+- colorscheme (string, choicelist) = "light" indexed=no < "light", "dark"
+- font (string, choicelist) = "arial" indexed=no < "arial", "lucida grande", "segoe ui", "tahoma", "trebuchet ms", "verdana"
