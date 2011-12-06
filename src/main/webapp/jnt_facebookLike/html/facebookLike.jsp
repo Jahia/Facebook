@@ -14,9 +14,33 @@
 <%--@elvariable id="currentResource" type="org.jahia.services.render.Resource"--%>
 <%--@elvariable id="url" type="org.jahia.services.render.URLGenerator"--%>
 
-<c:if test="${renderContext.liveMode}">
-     <c:url value="${url.server}${renderContext.mainResource.node.url}" var="pageUrl" />
-</c:if>
+<%--
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-<iframe src="http://www.facebook.com/plugins/like.php?app_id=${fbUtil:getFacebookAppID()}&amp;href=${pageUrl}&amp;send=false&amp;layout=${currentNode.properties.layout.string}&amp;width=${currentNode.properties.width.string}&amp;show_faces=${currentNode.properties.show_faces.string}&amp;action=${currentNode.properties.action.string}&amp;colorscheme=${currentNode.properties.colorscheme.string}&amp;font=${currentNode.properties.font.string}&amp;height=80"
+<div class="fb-like" data-send="false" data-width="450" data-show-faces="true" data-font="arial"></div>
+--%>
+
+<c:url value="http://www.facebook.com/plugins/like.php" var="pageUrl">
+    <c:param name="app_id" value="${fbUtil:getFacebookAppID()}"/>
+    <c:param name="" value=""/>
+    <c:param name="href" value="${url.server}${renderContext.mainResource.node.url}"/>
+    <c:param name="send" value="false"/>
+    <c:param name="layout" value="${currentNode.properties.layout.string}"/>
+    <c:param name="width" value="${currentNode.properties.width.string}"/>
+    <c:param name="show_faces" value="${currentNode.properties.show_faces.string}"/>
+    <c:param name="action" value="${currentNode.properties.action.string}"/>
+    <c:param name="colorscheme" value="${currentNode.properties.colorscheme.string}"/>
+    <c:param name="font" value="${currentNode.properties.font.string}"/>
+    <c:param name="height" value="80"/>
+</c:url>
+
+
+<iframe src="${pageUrl}"
         scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:${currentNode.properties.width.string}px; height:80px;" allowTransparency="true"></iframe>

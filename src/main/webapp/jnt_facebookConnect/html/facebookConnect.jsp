@@ -16,10 +16,16 @@
 
 <%--Display the link Facebook Connect if the user is not yet connected--%>
 <c:choose>
-    <c:when test="${!renderContext.loggedIn  || (currentAliasUser.username eq 'guest')}">
+    <c:when test="${!renderContext.loggedIn || currentAliasUser.username eq 'guest'}">
         <div>
-            <a href="https://graph.facebook.com/oauth/authorize?client_id=149708825083446&display=page&redirect_uri=${url.server}${url.base}${renderContext.mainResource.node.path}.html&scope=${fbUtil:getPermissionList()}" >
-                <img src="${url.currentModule}/img/fbconnect.gif" title="Facebook Connect" />
+            <c:url var="connectUrl" value="https://graph.facebook.com/oauth/authorize">
+                <c:param name="client_id" value="${fbUtil:getFacebookAppID()}"/>
+                <c:param name="display" value="page"/>
+                <c:param name="redirect_uri" value="${url.server}${url.base}${renderContext.mainResource.node.path}.html"/>
+                <c:param name="scope" value="${fbUtil:getPermissionList()}"/>
+            </c:url>
+            <a href="${connectUrl}" >
+                <img src="${url.currentModule}/images/fbconnect.gif" title="Login with Facebook" />
             </a>
             <c:if test="${!empty param.error}">
                 <span style="color:red;">${param.error} - ${param.error_reason} : ${error_description}</span>
@@ -30,8 +36,8 @@
                 You are now connected with your facebook account<br/>
                 <a href="<c:url value="${url.logout}"/>">Click here to logout</a>
     </c:when>
-    <c:when test="${renderContext.loggedIn && !renderContext.liveMode }">
-             <img src="${url.currentModule}/img/fbconnect.gif" title="Facebook Connect" />
+    <c:when test="${renderContext.loggedIn && !renderContext.liveMode}">
+        <img src="${url.currentModule}/images/fbconnect.gif" title="Facebook Connect" />
     </c:when>
 </c:choose>
 

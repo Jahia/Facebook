@@ -39,16 +39,18 @@
     please contact the sales department at sales@jahia.com.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 	<parent>
         <artifactId>jahia-modules</artifactId>
         <groupId>org.jahia.modules</groupId>
-        <version>6.5.1.0</version>
-    </parent>   
-    <groupId>org.jahia.modules</groupId>
+        <version>6.6.0.0-SNAPSHOT</version>
+    </parent>
     <artifactId>facebook</artifactId>
-	<version>1.1-SNAPSHOT</version>
+    <version>1.1-SNAPSHOT</version>
     <name>Facebook</name>  
     <packaging>war</packaging>
     <description>This is the custom module (Facebook) for running on a Jahia server.</description>
@@ -73,22 +75,21 @@
         </pluginRepository>
     </pluginRepositories>
 	<dependencies>
-		<dependency>
-            <groupId>org.jahia.server</groupId>
-            <artifactId>jahia-impl</artifactId>
-            <version>6.5.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jahia.server</groupId>
-            <artifactId>jahia-taglib</artifactId>
-            <version>6.5.1.0</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>com.restfb</groupId>
             <artifactId>restfb</artifactId>
-            <version>1.6.2</version>
+            <version>1.6.9</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>1.5.11</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 	<build>
@@ -96,7 +97,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>${war.plugin.version}</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
                     <warSourceExcludes>resources/*.properties</warSourceExcludes>
@@ -110,17 +110,19 @@
                         <manifestEntries>
 		                	<Implementation-Title>${project.name}</Implementation-Title>
 		                    <Implementation-Version>${project.version}</Implementation-Version>
-		                    <Implementation-Vendor />
-		                    <Implementation-Vendor-Id />
-		                    <Implementation-URL />
+	                    	<Implementation-Vendor>${jahia.manifest.vendor.name}</Implementation-Vendor>
+	                    	<Implementation-Vendor-Id>${jahia.manifest.vendor.id}</Implementation-Vendor-Id>
+	                    	<Implementation-URL>${jahia.manifest.vendor.url}</Implementation-URL>
 		                    <Specification-Title>${project.name}</Specification-Title>
 		                    <Specification-Version>${project.version}</Specification-Version>
-		                    <Specification-Vendor />
+	                    	<Specification-Vendor>${jahia.manifest.vendor.name}</Specification-Vendor>
                             <package-name>${project.name}</package-name>
-                            <depends>Default Jahia Templates</depends>
-                            <root-folder>${artifactId}</root-folder>
+                            <depends>default</depends>
+                            <module-type>module</module-type>
+                            <root-folder>${project.artifactId}</root-folder>
                         </manifestEntries>
                     </archive>
+                    <archiveClasses>true</archiveClasses>
                 </configuration>
             </plugin>
         </plugins>

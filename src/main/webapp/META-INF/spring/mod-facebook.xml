@@ -2,6 +2,17 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+       
+    <bean id="FacebookAuthValve" class="org.jahia.params.valves.FacebookAuthValveImpl">
+        <property name="appId" value="254189381307206"/>
+        <property name="appSecret">
+            <bean class="org.jahia.utils.EncryptionUtils$EncryptedPasswordFactoryBean">
+                <property name="password" value="ja+er7jRaFpwTd0ifS2Y8Px14U2b2vGRlH7PWRoht5ZkFnGO6iIe0Oic3QIg7KV/" />
+            </bean>
+        </property>
+        <property name="httpClientService" ref="HttpClientService"/>
+    </bean>
+       
     <bean id="JahiaUserManagerFacebookProvider" class="org.jahia.services.usermanager.JahiaUserManagerFacebookProvider" parent="JahiaUserManagerProvider">
         <property name="key" value="facebook"/>
         <property name="priority" value="3"/>
@@ -40,7 +51,7 @@
 
                 <!--Please do not use, there is a bug-->
                 <entry key="user_birthday.permission" value="false"/>
-                <entry key="j:birthDate.attribute.map" value="false"/>
+                <entry key="j:birthDate.attribute.map" value="true"/>
 
                  <!--Optional mapping-->
                 <entry key="name.attribute.map" value="true"/>
@@ -70,7 +81,8 @@
 
                 <entry key="user_work_history.permission" value="false"/>
                 <entry key="work.attribute.map" value="false"/>
-
+                
+                <entry key="link.attribute.map" value="true"/>
 
                 <!--Optional permissions for the user-->
                 <entry key="user_activities.permission" value="false"/>

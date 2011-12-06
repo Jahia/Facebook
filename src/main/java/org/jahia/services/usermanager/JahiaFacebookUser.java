@@ -41,14 +41,13 @@
 package org.jahia.services.usermanager;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Charles Flond
+ * @author Charles Flond
  * Date: 23/01/11
  * Time: 15:24
- * To change this template use File | Settings | File Templates.
  */
 public class JahiaFacebookUser extends BaseJahiaExternalUser {
 
+    private static final long serialVersionUID = 6585924952010699367L;
 
     //Constructor
     protected JahiaFacebookUser(String providerKey, String username, String userKey, UserProperties userProperties)
