@@ -39,10 +39,7 @@
     please contact the sales department at sales@jahia.com.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 	<parent>
         <artifactId>jahia-modules</artifactId>
@@ -50,7 +47,7 @@
         <version>6.6.0.0</version>
     </parent>
     <artifactId>facebook</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>Facebook</name>  
     <packaging>war</packaging>
     <description>This is the custom module (Facebook) for running on a Jahia xCM server.</description>
