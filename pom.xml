@@ -7,7 +7,7 @@
  
     For more information, please visit http://www.jahia.com.
  
-    Copyright (C) 2002-2011 Jahia Solutions Group SA. All rights reserved.
+    Copyright (C) 2002-2013 Jahia Solutions Group SA. All rights reserved.
  
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -47,33 +47,61 @@
 	<parent>
         <artifactId>jahia-modules</artifactId>
         <groupId>org.jahia.modules</groupId>
-        <version>6.6.0.0-SNAPSHOT</version>
+        <version>6.6.0.0</version>
     </parent>
     <artifactId>facebook</artifactId>
     <version>1.1-SNAPSHOT</version>
     <name>Facebook</name>  
     <packaging>war</packaging>
-    <description>This is the custom module (Facebook) for running on a Jahia server.</description>
+    <description>This is the custom module (Facebook) for running on a Jahia xCM server.</description>
     <scm>
         <connection>scm:git:git@github.com:Jahia/Facebook.git</connection>
         <url>scm:git:git@github.com:Jahia/Facebook.git</url>
         <developerConnection>scm:git:git@github.com:Jahia/Facebook.git</developerConnection>
     </scm>
 
-	<repositories>
+    <repositories>
         <repository>
-            <id>jahiaRepository</id>
-            <name>Jahia's Maven Repository</name>
-            <url>http://maven.jahia.org/maven2</url>
+            <id>jahia-public</id>
+            <name>Jahia Public Repository</name>
+            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
+    
     <pluginRepositories>
         <pluginRepository>
-            <id>jahiaRepository</id>
-            <name>Jahia's Maven Repository</name>
-            <url>http://maven.jahia.org/maven2</url>
+            <id>jahia-public</id>
+            <name>Jahia Public Repository</name>
+            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
         </pluginRepository>
     </pluginRepositories>
+    
+    <distributionManagement>
+        <repository>
+            <id>jahia-community-releases</id>
+            <url>https://devtools.jahia.com/nexus/content/repositories/jahia-community-releases</url>
+        </repository>
+        <snapshotRepository>
+            <id>jahia-community-snapshots</id>
+            <url>https://devtools.jahia.com/nexus/content/repositories/jahia-community-snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
 	<dependencies>
         <dependency>
             <groupId>com.restfb</groupId>
