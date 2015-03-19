@@ -44,11 +44,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.jahia.params.valves.FacebookAuthValveImpl;
+import org.jahia.params.valves.facebook.FacebookAuthValveImpl;
 import org.jahia.services.SpringContextSingleton;
-import org.jahia.services.usermanager.JahiaFacebookUser;
+import org.jahia.services.usermanager.facebook.JahiaFacebookUser;
 import org.jahia.services.usermanager.JahiaUser;
-import org.jahia.services.usermanager.JahiaUserManagerFacebookProvider;
+import org.jahia.services.usermanager.facebook.JahiaUserManagerFacebookProvider;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
@@ -64,7 +64,7 @@ public class FacebookUtil {
     private static Map<String, String> permissions = null;
 
     public static String getFacebookAppID() {
-        return ((FacebookAuthValveImpl) SpringContextSingleton.getModuleBean("FacebookAuthValve"))
+        return ((FacebookAuthValveImpl) SpringContextSingleton.getBeanInModulesContext("FacebookAuthValve"))
                 .getAppId();
     }
 
@@ -94,7 +94,7 @@ public class FacebookUtil {
 
         if (permissions == null) {
             JahiaUserManagerFacebookProvider provider = (JahiaUserManagerFacebookProvider) SpringContextSingleton
-                    .getModuleBean("JahiaUserManagerFacebookProvider");
+                    .getBeanInModulesContext("JahiaUserManagerFacebookProvider");
             FacebookUtil.permissions = provider.getPermissionsMap();
         }
 

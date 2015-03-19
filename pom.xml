@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
     This file is part of Jahia, next-generation open source CMS:
     Jahia's next-generation, open source CMS stems from a widely acknowledged vision
@@ -38,118 +39,81 @@
     If you are unsure which license is appropriate for your use,
     please contact the sales department at sales@jahia.com.
 -->
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-	<parent>
-        <artifactId>jahia-modules</artifactId>
-        <groupId>org.jahia.modules</groupId>
-        <version>6.6.0.0</version>
-    </parent>
-    <artifactId>facebook</artifactId>
-    <version>1.2-SNAPSHOT</version>
-    <name>Facebook</name>  
-    <packaging>war</packaging>
-    <description>This is the custom module (Facebook) for running on a Jahia xCM server.</description>
-    <scm>
-        <connection>scm:git:git@github.com:Jahia/Facebook.git</connection>
-        <url>scm:git:git@github.com:Jahia/Facebook.git</url>
-        <developerConnection>scm:git:git@github.com:Jahia/Facebook.git</developerConnection>
-    </scm>
-
-    <repositories>
-        <repository>
-            <id>jahia-public</id>
-            <name>Jahia Public Repository</name>
-            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    
-    <pluginRepositories>
-        <pluginRepository>
-            <id>jahia-public</id>
-            <name>Jahia Public Repository</name>
-            <url>https://devtools.jahia.com/nexus/content/groups/public</url>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-    
-    <distributionManagement>
-        <repository>
-            <id>jahia-community-releases</id>
-            <url>https://devtools.jahia.com/nexus/content/repositories/jahia-community-releases</url>
-        </repository>
-        <snapshotRepository>
-            <id>jahia-community-snapshots</id>
-            <url>https://devtools.jahia.com/nexus/content/repositories/jahia-community-snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
-    
-	<dependencies>
-        <dependency>
-            <groupId>com.restfb</groupId>
-            <artifactId>restfb</artifactId>
-            <version>1.6.9</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jul-to-slf4j</artifactId>
-            <version>1.5.11</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-    </dependencies>
-	<build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <warSourceExcludes>resources/*.properties</warSourceExcludes>
-                    <webResources>
-                        <resource>
-                          <directory>${project.build.directory}/native2ascii</directory>
-                          <targetPath>resources</targetPath>
-                        </resource>
-                    </webResources>
-                    <archive>
-                        <manifestEntries>
-		                	<Implementation-Title>${project.name}</Implementation-Title>
-		                    <Implementation-Version>${project.version}</Implementation-Version>
-	                    	<Implementation-Vendor>${jahia.manifest.vendor.name}</Implementation-Vendor>
-	                    	<Implementation-Vendor-Id>${jahia.manifest.vendor.id}</Implementation-Vendor-Id>
-	                    	<Implementation-URL>${jahia.manifest.vendor.url}</Implementation-URL>
-		                    <Specification-Title>${project.name}</Specification-Title>
-		                    <Specification-Version>${project.version}</Specification-Version>
-	                    	<Specification-Vendor>${jahia.manifest.vendor.name}</Specification-Vendor>
-                            <package-name>${project.name}</package-name>
-                            <depends>default</depends>
-                            <module-type>module</module-type>
-                            <root-folder>${project.artifactId}</root-folder>
-                        </manifestEntries>
-                    </archive>
-                    <archiveClasses>true</archiveClasses>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">  
+  <modelVersion>4.0.0</modelVersion>  
+  <parent> 
+    <artifactId>jahia-modules</artifactId>  
+    <groupId>org.jahia.modules</groupId>  
+    <version>7.0.0.0</version> 
+  </parent>  
+  <artifactId>facebook</artifactId>  
+  <version>2.0-SNAPSHOT</version>  
+  <name>Facebook</name>  
+  <packaging>bundle</packaging>  
+  <description>This is the custom module (Facebook) for running on a Jahia xCM server.</description>  
+  <scm> 
+    <connection>scm:git:git@github.com:Jahia/Facebook.git</connection>  
+    <url>scm:git:git@github.com:Jahia/Facebook.git</url>  
+    <developerConnection>scm:git:git@github.com:Jahia/Facebook.git</developerConnection> 
+  </scm>  
+  <repositories> 
+    <repository> 
+      <id>jahia-public</id>  
+      <name>Jahia Public Repository</name>  
+      <url>https://devtools.jahia.com/nexus/content/groups/public</url>  
+      <releases> 
+        <enabled>true</enabled>  
+        <updatePolicy>never</updatePolicy> 
+      </releases>  
+      <snapshots> 
+        <enabled>true</enabled> 
+      </snapshots> 
+    </repository> 
+  </repositories>  
+  <pluginRepositories> 
+    <pluginRepository> 
+      <id>jahia-public</id>  
+      <name>Jahia Public Repository</name>  
+      <url>https://devtools.jahia.com/nexus/content/groups/public</url>  
+      <releases> 
+        <enabled>true</enabled>  
+        <updatePolicy>never</updatePolicy> 
+      </releases>  
+      <snapshots> 
+        <enabled>true</enabled>  
+        <updatePolicy>always</updatePolicy> 
+      </snapshots> 
+    </pluginRepository> 
+  </pluginRepositories>  
+  <distributionManagement> 
+    <repository> 
+      <id>jahia-community-releases</id>  
+      <url>https://devtools.jahia.com/nexus/content/repositories/jahia-community-releases</url> 
+    </repository>  
+    <snapshotRepository> 
+      <id>jahia-community-snapshots</id>  
+      <url>https://devtools.jahia.com/nexus/content/repositories/jahia-community-snapshots</url> 
+    </snapshotRepository> 
+  </distributionManagement>  
+  <dependencies> 
+    <dependency> 
+      <groupId>com.restfb</groupId>  
+      <artifactId>restfb</artifactId>  
+      <version>1.6.9</version> 
+    </dependency>  
+    <dependency> 
+      <groupId>org.slf4j</groupId>  
+      <artifactId>jul-to-slf4j</artifactId>  
+      <version>1.5.11</version>  
+      <exclusions> 
+        <exclusion> 
+          <artifactId>slf4j-api</artifactId>  
+          <groupId>org.slf4j</groupId> 
+        </exclusion> 
+      </exclusions> 
+    </dependency> 
+  </dependencies>  
+  <build> 
+    <plugins></plugins> 
+  </build> 
 </project>

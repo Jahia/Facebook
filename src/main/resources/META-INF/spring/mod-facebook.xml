@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
        
-    <bean id="FacebookAuthValve" class="org.jahia.params.valves.FacebookAuthValveImpl">
+    <bean id="FacebookAuthValve" class="org.jahia.params.valves.facebook.FacebookAuthValveImpl">
         <property name="appId" value="254189381307206"/>
         <property name="appSecret">
             <bean class="org.jahia.utils.EncryptionUtils$EncryptedPasswordFactoryBean">
@@ -13,7 +13,7 @@
         <property name="httpClientService" ref="HttpClientService"/>
     </bean>
        
-    <bean id="JahiaUserManagerFacebookProvider" class="org.jahia.services.usermanager.JahiaUserManagerFacebookProvider" parent="JahiaUserManagerProvider">
+    <bean id="JahiaUserManagerFacebookProvider" class="org.jahia.services.usermanager.facebook.JahiaUserManagerFacebookProvider" parent="JahiaUserManagerProvider">
         <property name="key" value="facebook"/>
         <property name="priority" value="3"/>
         <property name="cacheService" ref="JahiaCacheService"/>

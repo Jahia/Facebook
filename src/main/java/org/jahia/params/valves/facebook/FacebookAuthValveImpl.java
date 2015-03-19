@@ -38,24 +38,25 @@
  * please contact the sales department at sales@jahia.com.
  */
 
-package org.jahia.params.valves;
+package org.jahia.params.valves.facebook;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.jahia.params.ProcessingContext;
+import org.jahia.params.valves.AuthValveContext;
+import org.jahia.params.valves.AutoRegisteredBaseAuthValve;
 import org.jahia.pipelines.PipelineException;
 import org.jahia.pipelines.valves.ValveContext;
 import org.jahia.registries.ServicesRegistry;
 import org.jahia.services.notification.HttpClientService;
 import org.jahia.services.usermanager.JahiaUser;
-import org.jahia.services.usermanager.JahiaUserManagerFacebookProvider;
+import org.jahia.services.usermanager.facebook.JahiaUserManagerFacebookProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

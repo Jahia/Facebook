@@ -38,7 +38,10 @@
  * please contact the sales department at sales@jahia.com.
  */
 
-package org.jahia.services.usermanager;
+package org.jahia.services.usermanager.facebook;
+
+import org.jahia.services.usermanager.BaseJahiaExternalUser;
+import org.jahia.services.usermanager.UserProperties;
 
 /**
  * @author Charles Flond
