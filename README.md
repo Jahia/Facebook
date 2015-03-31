@@ -73,4 +73,4 @@ declaration :
         <property name="authPipeline" ref="authPipeline"/>
     </bean>
 
-You will now be able to safely deploy the module.
+You will then be able to safely deploy the module.
