@@ -226,17 +226,37 @@ public class JahiaUserManagerFacebookProvider extends JahiaUserManagerProvider {
         jfu = new JahiaFacebookUser(JahiaUserManagerFacebookProvider.PROVIDER_NAME,
                 facebookUser.getId(), facebookUser.getId(), userProps);
 
-        // Update cache
-        if (jfu != null) {
-            // new cache to populate : cross providers only based upon names...
-            mProvidersUserCache.put("k" + jfu.getUserKey(), jfu);
+        try {
 
-            // name storage for speed
-            mUserCache.put("n" + jfu.getUsername(), new JahiaUserWrapper(jfu));
-            mProvidersUserCache.put("n" + jfu.getUsername(), jfu);
+            Thread currentThread = null;
+            ClassLoader backupClassLoader = null;
+            ClassLoader classLoader = this.getClass().getClassLoader();
+
+            try {
+                if(classLoader != null) {
+                    currentThread = Thread.currentThread();
+                    backupClassLoader = currentThread.getContextClassLoader();
+                    currentThread.setContextClassLoader(classLoader);
+                }
+                // Update cache
+                if (jfu != null) {
+                    // new cache to populate : cross providers only based upon names...
+                    mProvidersUserCache.put("k" + jfu.getUserKey(), jfu);
+
+                    // name storage for speed
+                    mUserCache.put("n" + jfu.getUsername(), new JahiaUserWrapper(jfu));
+                    mProvidersUserCache.put("n" + jfu.getUsername(), jfu);
+                }
+                // use wrappers in local cache
+                mUserCache.put("k" + jfu.getUserKey(), new JahiaUserWrapper(jfu));
+            } finally {
+                if(backupClassLoader != null) {
+                    currentThread.setContextClassLoader(backupClassLoader);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Error updating user cache for JFU=" + jfu.toString(), e);
         }
-        // use wrappers in local cache
-        mUserCache.put("k" + jfu.getUserKey(), new JahiaUserWrapper(jfu));
 
         // Perform a lookup to check if we already have this user in the JCR
         JCRUser jcrUser = (JCRUser) jcrUserManagerProvider.lookupExternalUser(jfu);

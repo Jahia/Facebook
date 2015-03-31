@@ -21,7 +21,7 @@
             <c:url var="connectUrl" value="https://graph.facebook.com/oauth/authorize">
                 <c:param name="client_id" value="${fbUtil:getFacebookAppID()}"/>
                 <c:param name="display" value="page"/>
-                <c:param name="redirect_uri" value="${url.server}${url.base}${renderContext.mainResource.node.path}.html"/>
+                <c:param name="redirect_uri" value="${url.server}${url.context}${url.base}${renderContext.mainResource.node.path}.html"/>
                 <c:param name="scope" value="${fbUtil:getPermissionList()}"/>
             </c:url>
             <a href="${connectUrl}" >
