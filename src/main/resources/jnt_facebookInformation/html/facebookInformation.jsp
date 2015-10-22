@@ -2,7 +2,6 @@
 <%@ page import="com.restfb.DefaultFacebookClient" %>
 <%@ page import="com.restfb.types.User" %>
 <%@ page import="com.restfb.types.Page" %>
-<%@ page import="org.jahia.services.usermanager.facebook.JahiaFacebookUser" %>
 <%@ page import="org.jahia.services.content.JCRSessionFactory" %>
 <%@ page import="com.restfb.Connection" %>
 <%@ page import="com.restfb.types.Post" %>

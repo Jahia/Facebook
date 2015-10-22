@@ -44,11 +44,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.restfb.Version;
 import org.jahia.params.valves.facebook.FacebookAuthValveImpl;
 import org.jahia.services.SpringContextSingleton;
-import org.jahia.services.usermanager.facebook.JahiaFacebookUser;
 import org.jahia.services.usermanager.JahiaUser;
-import org.jahia.services.usermanager.facebook.JahiaUserManagerFacebookProvider;
 
 import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
@@ -60,6 +59,8 @@ import com.restfb.types.User;
  */
 public class FacebookUtil {
 
+    public static Version FB_VERSION = Version.VERSION_2_5;
+
     private static String permissionList = "";
     private static Map<String, String> permissions = null;
 
@@ -69,12 +70,12 @@ public class FacebookUtil {
     }
 
     public static int getFriendsNumber(JahiaUser jahiaUser) {
-        if (jahiaUser != null && jahiaUser instanceof JahiaFacebookUser) {
+        if (jahiaUser != null) {
             String access_token = jahiaUser.getProperty("access_token");
 
             if (access_token != null) {
                 // Get the Facebook Client
-                FacebookClient facebookClient = new DefaultFacebookClient(access_token);
+                FacebookClient facebookClient = new DefaultFacebookClient(access_token, FB_VERSION);
 
                 // Get friends & feeds
                 Connection<User> myFriends = facebookClient.fetchConnection("me/friends",
@@ -92,13 +93,7 @@ public class FacebookUtil {
 
     public static String getPermissionList() {
 
-        if (permissions == null) {
-            JahiaUserManagerFacebookProvider provider = (JahiaUserManagerFacebookProvider) SpringContextSingleton
-                    .getBeanInModulesContext("JahiaUserManagerFacebookProvider");
-            FacebookUtil.permissions = provider.getPermissionsMap();
-        }
-
-        if (permissionList.length() > 0) {
+        if (permissions != null && permissionList.length() > 0) {
             return permissionList;
         } else {
             Iterator<Entry<String, String>> entries = permissions.entrySet().iterator();

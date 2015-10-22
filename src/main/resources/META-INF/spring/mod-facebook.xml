@@ -4,22 +4,15 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
        
     <bean id="FacebookAuthValve" class="org.jahia.params.valves.facebook.FacebookAuthValveImpl">
-        <property name="appId" value="254189381307206"/>
-        <property name="appSecret">
-            <bean class="org.jahia.utils.EncryptionUtils$EncryptedPasswordFactoryBean">
-                <property name="password" value="ja+er7jRaFpwTd0ifS2Y8Px14U2b2vGRlH7PWRoht5ZkFnGO6iIe0Oic3QIg7KV/" />
-            </bean>
+        <property name="appId" value="367543746749734"/>
+        <property name="appSecret" value="34fd97c8974b655df9856e9bef1f77f9">
         </property>
         <property name="httpClientService" ref="HttpClientService"/>
+        <property name="facebookPropertiesMapping" ref="facebookPropertiesMapping"/>
+        <property name="userService" ref="JahiaUserManagerService"/>
     </bean>
        
-    <bean id="JahiaUserManagerFacebookProvider" class="org.jahia.services.usermanager.facebook.JahiaUserManagerFacebookProvider" parent="JahiaUserManagerProvider">
-        <property name="key" value="facebook"/>
-        <property name="priority" value="3"/>
-        <property name="cacheService" ref="JahiaCacheService"/>
-        <property name="defaultProvider" value="false"/>
-        <property name="readOnly" value="true"/>
-        <property name="jcrUserManagerProvider" ref="JCRUserManagerProvider"/>
+    <bean id="facebookPropertiesMapping" class="org.jahia.modules.facebook.FacebookPropertiesMapping">
         <property name="facebookProperties">
             <map>
                 <!--How it works ?-->
@@ -55,6 +48,7 @@
 
                  <!--Optional mapping-->
                 <entry key="name.attribute.map" value="true"/>
+                <entry key="picture.attribute.map" value="true"/>
 
                 <entry key="user_education_history.permission" value="false"/>
                 <entry key="education.attribute.map" value="false"/>

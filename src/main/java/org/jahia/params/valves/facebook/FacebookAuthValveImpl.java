@@ -40,25 +40,42 @@
 
 package org.jahia.params.valves.facebook;
 
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.types.User;
+import org.apache.jackrabbit.core.security.JahiaPrivilegeRegistry;
+import org.jahia.api.Constants;
+import org.jahia.modules.facebook.FacebookPropertiesMapping;
+import org.jahia.modules.facebook.FacebookUtil;
+import org.jahia.params.valves.AuthValveContext;
+import org.jahia.params.valves.AutoRegisteredBaseAuthValve;
+import org.jahia.params.valves.CookieAuthConfig;
+import org.jahia.params.valves.CookieAuthValveImpl;
+import org.jahia.pipelines.PipelineException;
+import org.jahia.pipelines.valves.ValveContext;
+import org.jahia.services.content.JCRCallback;
+import org.jahia.services.content.JCRSessionWrapper;
+import org.jahia.services.content.JCRTemplate;
+import org.jahia.services.content.decorator.JCRUserNode;
+import org.jahia.services.notification.HttpClientService;
+import org.jahia.services.preferences.user.UserPreferencesHelper;
+import org.jahia.services.usermanager.JahiaUser;
+import org.jahia.services.usermanager.JahiaUserManagerService;
+import org.jahia.settings.SettingsBean;
+import org.jahia.utils.LanguageCodeConverters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.jcr.RepositoryException;
+import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLEncoder;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.jahia.params.ProcessingContext;
-import org.jahia.params.valves.AuthValveContext;
-import org.jahia.params.valves.AutoRegisteredBaseAuthValve;
-import org.jahia.pipelines.PipelineException;
-import org.jahia.pipelines.valves.ValveContext;
-import org.jahia.registries.ServicesRegistry;
-import org.jahia.services.notification.HttpClientService;
-import org.jahia.services.usermanager.JahiaUser;
-import org.jahia.services.usermanager.facebook.JahiaUserManagerFacebookProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Locale;
+import java.util.Properties;
 
 /**
  * @author Charles Flond Date: 31/01/11 Time: 11:50
@@ -73,6 +90,16 @@ public class FacebookAuthValveImpl extends AutoRegisteredBaseAuthValve {
     private String appSecret;
 
     private HttpClientService httpClientService;
+
+    private FacebookPropertiesMapping facebookPropertiesMapping;
+
+    private JahiaUserManagerService userService;
+
+    private CookieAuthConfig cookieAuthConfig;
+
+    public static final String USE_COOKIE = "useCookie";
+
+    public static final String VALVE_RESULT = "login_valve_result";
 
     private String getAccessToken(String fbCode, HttpServletRequest request)
             throws IOException {
@@ -112,35 +139,88 @@ public class FacebookAuthValveImpl extends AutoRegisteredBaseAuthValve {
 
     // Invoke method
     public void invoke(Object context, ValveContext valveContext) throws PipelineException {
+
         // Retrieve the context, the current request and the get parameter (code)
-        AuthValveContext authContext = (AuthValveContext) context;
-        HttpServletRequest request = authContext.getRequest();
+        final AuthValveContext authContext = (AuthValveContext) context;
+        final HttpServletRequest request = authContext.getRequest();
+        if(authContext.getSessionFactory().getCurrentUser() != null){
+            return;
+        }
         String fbCode = request.getParameter("code");
 
         // If we have the code from Facebook, we can start to work
         if (fbCode != null) {
             try {
-                JahiaUser jfu = null;
 
                 String fbToken = getAccessToken(fbCode, request);
-                if (fbToken != null) {
-                    JahiaUserManagerFacebookProvider provider = (JahiaUserManagerFacebookProvider) ServicesRegistry
-                            .getInstance().getJahiaUserManagerService().getProvider("facebook");
-                    jfu = provider.lookupUserByAccessToken(fbToken);
-                }
 
-                if (jfu != null) {
-                    authContext.getSessionFactory().setCurrentUser(jfu);
-                    request.getSession().setAttribute(ProcessingContext.SESSION_USER, jfu);
-                } else {
-                    throw new RuntimeException("Cannot retrieve user from access token");
+                if (fbToken != null) {
+                    // Get the Facebook Client based on the access token
+                    FacebookClient facebookClient = new DefaultFacebookClient(fbToken, FacebookUtil.FB_VERSION);
+
+                    // Get the corresponding facebook user
+                    final User user = facebookClient.fetchObject("me", User.class, Parameter.with("fields", "id, name, email, locale, first_name, last_name, picture"));
+                    Locale userLocale = Locale.getDefault();
+                    String[] localeParams =  user.getLocale()!=null? user.getLocale().split("_") : new String[]{};
+                    if (localeParams.length > 1) {
+                        userLocale = new Locale(localeParams[0], localeParams[1]);
+                    }
+
+                    // Create a Jahia Facebook User based on the "business" Facebook User
+                    final Properties props = facebookPropertiesMapping.mapProperties(user, fbToken);
+                    JCRUserNode userNode = JCRTemplate.getInstance().doExecuteWithSystemSessionAsUser((JahiaUser) null, "default", userLocale, new JCRCallback<JCRUserNode>() {
+                        public JCRUserNode doInJCR(JCRSessionWrapper session) throws RepositoryException {
+
+                            JahiaPrivilegeRegistry.init(session);
+                            //Look for previous connection's user
+                            JCRUserNode oldUser = userService.lookupUser(user.getId());
+                            if(oldUser != null){
+                                //There's no update we must delete any previous data
+                                userService.deleteUser(oldUser.getPath(), session);
+                            }
+                            //Create the user in JCR
+                            JCRUserNode userNode = userService.createUser(user.getId(), "facebook", props, session);
+
+                            if (userNode != null) {
+                                //Save the session
+                                session.save();
+                                loginFacebookUser(authContext, request, userNode, session.getLocale());
+                            } else {
+                                throw new RuntimeException("Cannot retrieve user from access token");
+                            }
+                            return userNode;
+                        }
+                    });
+                    return;
                 }
-                return;
             } catch (Exception e) {
                 logger.warn("Error authenticating the user via Facebook", e);
             }
         }
         valveContext.invokeNext(context);
+    }
+
+    private void loginFacebookUser(AuthValveContext authContext, HttpServletRequest httpServletRequest, JCRUserNode theUser, Locale userLocale){
+        if (logger.isDebugEnabled()) {
+            logger.debug("User " + theUser + " logged in with facebook.");
+        }
+
+        httpServletRequest.getSession().setAttribute(Constants.SESSION_USER, theUser.getJahiaUser());
+        httpServletRequest.setAttribute(VALVE_RESULT, "ok");
+        authContext.getSessionFactory().setCurrentUser(theUser.getJahiaUser());
+
+        // do a switch to the user's preferred language
+        if (userLocale != null) {
+            httpServletRequest.getSession().setAttribute(Constants.SESSION_LOCALE, userLocale);
+        }
+
+        String useCookie = httpServletRequest.getParameter(USE_COOKIE);
+        if ((useCookie != null) && ("on".equals(useCookie))) {
+            // the user has indicated he wants to use cookie authentication
+            CookieAuthValveImpl.createAndSendCookie(authContext, theUser, cookieAuthConfig);
+        }
+
+        //SpringContextSingleton.getInstance().publishEvent(new LoginEngineAuthValveImpl.LoginEvent(this, theUser.getJahiaUser(), authContext));
     }
 
     public void setAppId(String appId) {
@@ -153,6 +233,17 @@ public class FacebookAuthValveImpl extends AutoRegisteredBaseAuthValve {
 
     public void setHttpClientService(HttpClientService httpClientService) {
         this.httpClientService = httpClientService;
+    }
+    public void setFacebookPropertiesMapping(FacebookPropertiesMapping facebookPropertiesMapping) {
+        this.facebookPropertiesMapping = facebookPropertiesMapping;
+    }
+
+    public void setCookieAuthConfig(CookieAuthConfig cookieAuthConfig) {
+        this.cookieAuthConfig = cookieAuthConfig;
+    }
+
+    public void setUserService(JahiaUserManagerService userService) {
+        this.userService = userService;
     }
     
     private String readURL(URL url) throws IOException {
