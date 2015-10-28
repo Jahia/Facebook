@@ -178,7 +178,6 @@ public class FacebookAuthValveImpl extends AutoRegisteredBaseAuthValve {
 
                             //Look for previous connection's user
                             JCRUserNode userNode = userService.lookupUser(user.getEmail(), session);
-                            JCRUserNode userRoot = userService.lookupUser("root");
                             if(userNode == null){
                                 //Create the user in JCR
                                 userNode = userService.createUser(user.getEmail(), "SHA-1:*", props, session);
