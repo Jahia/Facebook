@@ -3,7 +3,14 @@ package org.jahia.modules.facebook;
 import com.restfb.types.User;
 import org.apache.commons.lang.StringUtils;
 import org.apache.jackrabbit.util.ISO8601;
+import org.jahia.services.content.decorator.JCRUserNode;
+import org.jahia.services.usermanager.JahiaUser;
 
+import javax.jcr.RepositoryException;
+import javax.jcr.ValueFormatException;
+import javax.jcr.lock.LockException;
+import javax.jcr.nodetype.ConstraintViolationException;
+import javax.jcr.version.VersionException;
 import java.util.*;
 
 /**
@@ -17,6 +24,12 @@ public class FacebookPropertiesMapping {
 
     private User fbUser;
     private Properties props;
+
+    public void mapProperties(JCRUserNode jahiaUser, Properties props) throws RepositoryException {
+        for (Object key : props.keySet()) {
+            jahiaUser.setProperty(key.toString(), (String)props.get(key));
+        }
+    }
 
     public Properties mapProperties(User fbUser, String token) {
         this.fbUser = fbUser;

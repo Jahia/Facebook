@@ -22,7 +22,7 @@
                 <c:param name="client_id" value="${fbUtil:getFacebookAppID()}"/>
                 <c:param name="scope" value="public_profile,email"/>
                 <c:param name="display" value="page"/>
-                <c:param name="redirect_uri" value="${url.server}${url.context}${url.base}${renderContext.mainResource.node.path}.html"/>
+                <c:param name="redirect_uri" value="${url.server}${url.context}${url.base}${renderContext.mainResource.node.path}.html?site=${renderContext.site.name}"/>
             </c:url>
             <a href="${connectUrl}" >
                 <img src="${url.currentModule}/images/fbconnect.gif" title="Login with Facebook" />

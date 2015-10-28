@@ -5,8 +5,7 @@
        
     <bean id="FacebookAuthValve" class="org.jahia.params.valves.facebook.FacebookAuthValveImpl">
         <property name="appId" value="367543746749734"/>
-        <property name="appSecret" value="34fd97c8974b655df9856e9bef1f77f9">
-        </property>
+        <property name="appSecret" value="34fd97c8974b655df9856e9bef1f77f9"/>
         <property name="httpClientService" ref="HttpClientService"/>
         <property name="facebookPropertiesMapping" ref="facebookPropertiesMapping"/>
         <property name="userService" ref="JahiaUserManagerService"/>
