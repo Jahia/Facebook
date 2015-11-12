@@ -44,6 +44,7 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.Parameter;
 import com.restfb.types.User;
+import org.apache.commons.lang.StringUtils;
 import org.apache.poi.openxml4j.opc.ContentTypes;
 import org.jahia.api.Constants;
 import org.jahia.modules.facebook.FacebookPropertiesMapping;
@@ -70,6 +71,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -92,6 +95,8 @@ public class FacebookAuthValveImpl extends AutoRegisteredBaseAuthValve {
     private JahiaUserManagerService userService;
 
     private CookieAuthConfig cookieAuthConfig;
+
+    private List<String> fields;
 
     public static final String USE_COOKIE = "useCookie";
 
@@ -164,7 +169,7 @@ public class FacebookAuthValveImpl extends AutoRegisteredBaseAuthValve {
                     FacebookClient facebookClient = new DefaultFacebookClient(fbToken, FacebookUtil.FB_VERSION);
 
                     // Get the corresponding facebook user
-                    final User user = facebookClient.fetchObject("me", User.class, Parameter.with("fields", "id, name, email, locale, first_name, last_name, picture"));
+                    final User user = facebookClient.fetchObject("me", User.class, Parameter.with("fields", StringUtils.join(fields, ", ")));
                     Locale userLocale = Locale.getDefault();
                     String[] localeParams =  user.getLocale()!=null? user.getLocale().split("_") : new String[]{};
                     if (localeParams.length > 1) {
@@ -255,6 +260,10 @@ public class FacebookAuthValveImpl extends AutoRegisteredBaseAuthValve {
 
     public void setCookieAuthConfig(CookieAuthConfig cookieAuthConfig) {
         this.cookieAuthConfig = cookieAuthConfig;
+    }
+
+    public void setFields(List<String> fields) {
+        this.fields = fields;
     }
 
     public void setUserService(JahiaUserManagerService userService) {

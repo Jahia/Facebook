@@ -9,6 +9,18 @@
         <property name="httpClientService" ref="HttpClientService"/>
         <property name="facebookPropertiesMapping" ref="facebookPropertiesMapping"/>
         <property name="userService" ref="JahiaUserManagerService"/>
+        <property name="fields">
+            <list>
+                <value>id</value>
+                <value>name</value>
+                <value>email</value>
+                <value>locale</value>
+                <value>first_name</value>
+                <value>last_name</value>
+                <value>picture</value>
+            </list>
+        </property>
+
     </bean>
        
     <bean id="facebookPropertiesMapping" class="org.jahia.modules.facebook.FacebookPropertiesMapping">
