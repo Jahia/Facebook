@@ -14,19 +14,10 @@ procedure to use it on Jahia 7.0.0.1
 
 https://www.youtube.com/watch?v=s1CSWkK9iOo
 
-In order to make this module work on your website you need to put your facebook app id and secret in the spring file
-(src/main/resources/META-INF/spring/mod-facebook.xml) as FacebookAuthValve bean properties.
-
-```
-<bean id="FacebookAuthValve" class="org.jahia.params.valves.facebook.FacebookAuthValveImpl">
-        <property name="appId" value="APP_ID"/>
-        <property name="appSecret">
-            <bean class="org.jahia.utils.EncryptionUtils$EncryptedPasswordFactoryBean">
-                <property name="password" value="ENCRYPTED_APP_SECRET" />
-            </bean>
-        </property>
-        ...
-```
+In order to make this module work on your website you need to put your facebook app id and secret in the
+jahia.properties file :
+valves.facebook.appId=APP_ID
+valves.facebook.appSecret=ENCRYPTED_APP_SECRET
 
 Where APP_ID is your app id and ENCRYPTED_APP_SECRET is your app secret after encryption.
 You can then deploy the module on your Jahia Server.

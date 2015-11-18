@@ -4,8 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
        
     <bean id="FacebookAuthValve" class="org.jahia.params.valves.facebook.FacebookAuthValveImpl">
-        <property name="appId" value="367543746749734"/>
-        <property name="appSecret" value="34fd97c8974b655df9856e9bef1f77f9"/>
+        <property name="appId" value="${valves.facebook.appId}"/>
+        <property name="appSecret" value="${valves.facebook.appSecret}"/>
         <property name="httpClientService" ref="HttpClientService"/>
         <property name="facebookPropertiesMapping" ref="facebookPropertiesMapping"/>
         <property name="userService" ref="JahiaUserManagerService"/>
