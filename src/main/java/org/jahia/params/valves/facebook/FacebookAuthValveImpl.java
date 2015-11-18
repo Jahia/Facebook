@@ -181,33 +181,35 @@ public class FacebookAuthValveImpl extends AutoRegisteredBaseAuthValve {
                     JCRTemplate.getInstance().doExecuteWithSystemSessionAsUser((JahiaUser) null, "default", userLocale, new JCRCallback<Object>() {
                         public Object doInJCR(JCRSessionWrapper session) throws RepositoryException {
 
-                            //Look for previous connection's user
-                            JCRUserNode userNode = userService.lookupUser(user.getEmail(), session);
-                            if(userNode == null){
-                                //Create the user in JCR
-                                userNode = userService.createUser(user.getEmail(), "SHA-1:*", props, session);
+                            if(!StringUtils.isBlank(user.getEmail())) {
+                                //Look for previous connection's user
+                                JCRUserNode userNode = userService.lookupUser(user.getEmail(), session);
                                 if (userNode == null) {
-                                    throw new RuntimeException("Cannot create user from access token");
+                                    //Create the user in JCR
+                                    userNode = userService.createUser(user.getEmail(), "SHA-1:*", props, session);
+                                    if (userNode == null) {
+                                        throw new RuntimeException("Cannot create user from access token");
+                                    }
+                                } else {
+                                    facebookPropertiesMapping.mapProperties(userNode, props);
                                 }
-                            }else{
-                                facebookPropertiesMapping.mapProperties(userNode, props);
-                            }
-                            try {
-                                URL urlPicture = new URL(user.getPicture().getUrl());
-                                InputStream input = urlPicture.openStream();
-                                JCRNodeWrapper filesFolder = userNode.hasNode("files")?userNode.getNode("files"):userNode.addNode("files", "jnt:folder");
-                                JCRNodeWrapper pictureNode = filesFolder.uploadFile(user.getId(), input, ContentTypes.IMAGE_JPEG);
+                                try {
+                                    URL urlPicture = new URL(user.getPicture().getUrl());
+                                    InputStream input = urlPicture.openStream();
+                                    JCRNodeWrapper filesFolder = userNode.hasNode("files") ? userNode.getNode("files") : userNode.addNode("files", "jnt:folder");
+                                    JCRNodeWrapper pictureNode = filesFolder.uploadFile(user.getId(), input, ContentTypes.IMAGE_JPEG);
 
-                                if(pictureNode != null ){
+                                    if (pictureNode != null) {
 
-                                    pictureNode.addMixin("jmix:autoPublish");
-                                    userNode.setProperty("j:picture", pictureNode);
+                                        pictureNode.addMixin("jmix:autoPublish");
+                                        userNode.setProperty("j:picture", pictureNode);
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                                session.save();
+                                loginFacebookUser(authContext, request, userNode, session.getLocale());
                             }
-                            session.save();
-                            loginFacebookUser(authContext, request, userNode, session.getLocale());
                             return null;
                         }
                     });
